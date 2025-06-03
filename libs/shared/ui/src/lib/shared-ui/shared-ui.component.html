@@ -1,0 +1,18 @@
+                       <td  >
+                            <img *ngIf='showImage'
+                                [src]='item.imageUrl'
+                                [title]='item.productName'
+                                [style.width.px]='imageWidth'
+                                [style.margin.px]='imageMargin'>
+                        </td>
+                        <td><a >
+                                {{ item.productName }}
+                            </a>
+						</td>
+            <!-- lowercase , uppercase -->
+                        <td>{{ item.productCode | uppercase  }}</td>
+                        <td>{{ item.releaseDate }}</td>
+                        
+                        <td>{{ item.price | currency : 'USD' : 'symbol': '1.2-2' }}</td>
+                    
+                        <td>

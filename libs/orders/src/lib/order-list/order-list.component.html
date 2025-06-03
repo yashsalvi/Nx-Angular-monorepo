@@ -1,0 +1,19 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngIf="showImage">Image</th>
+      <th>Order ID</th>
+      <th>Customer</th>
+      <th>Date</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+     <tr *ngFor="let order of orders">
+    <angular-monorepo-shared-ui
+      [item]="order"
+      [showImage]="true"
+    ></angular-monorepo-shared-ui>
+     </tr>
+  </tbody>
+</table>
