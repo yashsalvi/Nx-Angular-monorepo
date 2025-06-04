@@ -10,7 +10,7 @@
                             </a>
 						</td>
             <!-- lowercase , uppercase -->
-                        <td>{{ item.productCode | uppercase  }}</td>
+                        <td>{{ item.code | uppercase |  convertToSpaces: ' ' }}</td>
                         <td>{{ item.releaseDate }}</td>
                         
                         <td>{{ item.price | currency : 'USD' : 'symbol': '1.2-2' }}</td>

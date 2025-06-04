@@ -1,0 +1,9 @@
+{
+  "name": "utils-lib",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/utils/src",
+  "prefix": "@angular-monorepo",
+  "projectType": "library",
+ "tags": ["type:util", "scope:utils"],
+  "targets": {}
+}

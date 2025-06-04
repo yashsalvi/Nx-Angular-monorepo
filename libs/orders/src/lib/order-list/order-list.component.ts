@@ -23,7 +23,7 @@ this.orders= [
     customerName: 'Alice Smith',
     orderDate: '2025-06-01',
     price: 250.75,
-
+    code: "Id 001",
     imageUrl: 'https://i.pravatar.cc/150?img=3'
   },
   {
@@ -31,12 +31,14 @@ this.orders= [
     customerName: 'Bob Johnson',
     orderDate: '2025-06-02',
     price: 180.00,
+    code: "Cd 002",
     imageUrl: 'https://i.pravatar.cc/150?img=7'
   },
   {
     orderId: 'ORD003',
     customerName: 'Charlie Brown',
     orderDate: '2025-06-03',
+    code: "Ld 003",
     price: 320.50,
     imageUrl: 'https://i.pravatar.cc/150?img=10'
   }

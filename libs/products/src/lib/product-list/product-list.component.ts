@@ -48,7 +48,7 @@ export class ProductListComponent implements OnInit  {
       {
         productId: 100,
         productName: "Ideal Water bottle",
-        productCode: "Id 001",
+        code: "Id 001",
         releaseDate: "01/01/2018",
         price: 350.35,
         description: "Stainless steel water bottle of Ideal Brand",
@@ -58,7 +58,7 @@ export class ProductListComponent implements OnInit  {
       {
         productId: 210,
         productName: "Cisco DeskPhone",
-        productCode: "Cs 2101",
+        code: "Cs 2101",
         releaseDate: "01/01/2019",
         price: 332.50,
         description: "VoIP deskphone of Cisco brand",
@@ -68,7 +68,7 @@ export class ProductListComponent implements OnInit  {
       {
         productId: 410,
         productName: "Lenovo Monitor",
-        productCode: "Len 100",
+        code: "Len 100",
         releaseDate: "01/02/2016",
         price: 10231.50,
         description: "14 Inches LED MOnitor display",

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule, UpperCasePipe } from '@angular/common';
+import { ConvertToSpacesPipe } from '@angular-monorepo/utils';
+import { CommonModule, UpperCasePipe, CurrencyPipe } from '@angular/common';
 
 @Component({
     standalone: true,
   selector: 'angular-monorepo-shared-ui',
-  imports: [CommonModule, UpperCasePipe],
+  imports: [CommonModule, UpperCasePipe, CurrencyPipe, ConvertToSpacesPipe],
   templateUrl: './shared-ui.component.html',
   styleUrl: './shared-ui.component.css',
 })
