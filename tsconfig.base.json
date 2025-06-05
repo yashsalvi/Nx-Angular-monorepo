@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@angular-monorepo/lit-widgets": ["libs/lit-widgets/src/index.ts"],
       "@angular-monorepo/orders": ["libs/orders/src/index.ts"],
       "@angular-monorepo/products": ["libs/products/src/index.ts"],
       "@angular-monorepo/shared-ui": ["libs/shared/ui/src/index.ts"],

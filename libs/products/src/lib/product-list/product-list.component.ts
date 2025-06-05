@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, UpperCasePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { IProduct } from '../product';
 import { SharedUiComponent } from '@angular-monorepo/shared-ui';
 import { FormsModule } from '@angular/forms';

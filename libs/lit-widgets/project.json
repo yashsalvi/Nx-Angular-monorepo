@@ -1,0 +1,9 @@
+{
+  "name": "lit-widgets",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lit-widgets/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project lit-widgets --web",
+  "targets": {}
+}
