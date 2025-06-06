@@ -1,8 +1,16 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
-import '@angular-monorepo/lit-widgets';
+import { provideServiceWorker } from '@angular/service-worker';
 import { AppComponent } from './app/app.component';
+import { environment } from './environments/environment';
+import '@angular-monorepo/lit-widgets';
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
-);
+bootstrapApplication(AppComponent, {
+  ...appConfig,
+  providers: [
+    ...appConfig.providers,
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
+  ],
+}).catch((err) => console.error(err));

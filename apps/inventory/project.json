@@ -7,20 +7,24 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
+      "executor": "@nx/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/inventory",
         "index": "apps/inventory/src/index.html",
-        "browser": "apps/inventory/src/main.ts",
+      "main": "apps/inventory/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/inventory/tsconfig.app.json",
         "assets": [
           "apps/inventory/src/favicon.ico",
-          "apps/inventory/src/assets"
+          "apps/inventory/src/assets",
+          "apps/inventory/src/manifest.webmanifest",
+          "apps/inventory/src/offline.html"
         ],
         "styles": ["apps/inventory/src/styles.css"],
-        "scripts": []
+        "scripts": [],
+                  "serviceWorker": true,
+          "ngswConfigPath": "apps/inventory/ngsw-config.json"
       },
       "configurations": {
         "production": {
@@ -41,7 +45,8 @@
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "serviceWorker": false
         }
       },
       "defaultConfiguration": "production"
@@ -68,7 +73,7 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "inventory:build",
-        "staticFilePath": "dist/apps/inventory/browser"
+        "staticFilePath": "dist/apps/inventory"
       }
     }
   }

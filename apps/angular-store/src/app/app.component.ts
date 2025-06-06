@@ -7,6 +7,7 @@ import { OrderListComponent } from '@angular-monorepo/orders';
      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     selector: 'angular-monorepo-root',
     templateUrl: './app.component.html',
+    standalone: true,
     styleUrl: './app.component.css'
 })
 export class AppComponent {
