@@ -45,7 +45,3 @@ export class ClockWidget extends LitElement {
 
   static override styles = clockWidgetStyles;
 }
-
-if (!customElements.get('clock-widget')) {
-  customElements.define('clock-widget', ClockWidget);
-}

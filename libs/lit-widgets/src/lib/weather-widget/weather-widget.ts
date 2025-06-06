@@ -41,7 +41,3 @@ export class WeatherWidget extends LitElement {
 
   static override styles = weatherWidgetStyles;
 }
-
-if (!customElements.get('weather-widget')) {
-  customElements.define('weather-widget', WeatherWidget);
-}
