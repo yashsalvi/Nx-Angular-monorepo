@@ -1,5 +1,6 @@
 {
   "index": "/index.html",
+"navigationUrls": ["/**"],
   "assetGroups": [
     {
       "name": "app",
@@ -18,7 +19,7 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "urls": [ ],
+        "urls": [],
         "files": [
           "/assets/**",
           "/*.(png|jpg|jpeg|svg|gif)"
@@ -27,7 +28,7 @@
     }
   ],
   "navigationFallback": {
-    "index": "/offline.html",
+    "index": "/index.html",
     "rewrite": true
   }
 }

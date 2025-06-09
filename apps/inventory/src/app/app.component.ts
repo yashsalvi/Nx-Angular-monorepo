@@ -1,9 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ProductListComponent } from '@angular-monorepo/products';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-    imports: [ProductListComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [RouterOutlet],
     selector: 'angular-monorepo-root',
     templateUrl: './app.component.html',
     standalone: true,
