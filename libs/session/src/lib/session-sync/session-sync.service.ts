@@ -36,7 +36,7 @@ export class SessionSyncService {
   startMainTabStatus(): void {
     if (!this.mainTabIntervalId) {
       this.mainTabIntervalId = setInterval(() => {
-        localStorage.setItem(this.MAIN_TAB_KEY, Date.now().toString()); // ✅ Correct key
+        localStorage.setItem(this.MAIN_TAB_KEY, Date.now().toString());
       }, this.MAIN_TAB_INTERVAL);
     }
   }

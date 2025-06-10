@@ -1,7 +1,6 @@
 import { ProductListComponent } from '@angular-monorepo/products';
 import { SessionSyncService } from '@angular-monorepo/session-sync';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shell',
@@ -16,7 +15,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
   private inactivityTimeout?: ReturnType<typeof setTimeout>;
   private takeoverCheckIntervalId?: ReturnType<typeof setInterval>;
 
-  constructor(private sessionSync: SessionSyncService, private router: Router) {}
+  constructor(private sessionSync: SessionSyncService) {}
 
   ngOnInit(): void {
     console.log('[AppShell] Component initialized');
@@ -27,7 +26,7 @@ export class AppShellComponent implements OnInit, OnDestroy {
 
     console.log('Initial session sync done:', this.sessionSync.getCurrentSession());
 
-    // Delay before checking who is main tab
+ 
     setTimeout(() => this.checkMainTab(), 1500);
 
     // Regularly check if this tab should take over
