@@ -19,8 +19,11 @@
       "@angular-monorepo/lit-widgets": ["libs/lit-widgets/src/index.ts"],
       "@angular-monorepo/orders": ["libs/orders/src/index.ts"],
       "@angular-monorepo/products": ["libs/products/src/index.ts"],
+      "@angular-monorepo/push-notification": ["libs/notifications/src/index.ts"],
       "@angular-monorepo/session-sync": ["libs/session/src/index.ts"],
-       "@angular-monorepo/session-sync/*": ["libs/session/src/lib/session-sync/*"],
+      "@angular-monorepo/session-sync/*": [
+        "libs/session/src/lib/session-sync/*"
+      ],
       "@angular-monorepo/shared-ui": ["libs/shared/ui/src/index.ts"],
       "@angular-monorepo/utils": ["libs/utils/src/index.ts"]
     }

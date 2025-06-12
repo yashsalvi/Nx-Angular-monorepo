@@ -1,4 +1,5 @@
 import { ProductListComponent } from '@angular-monorepo/products';
+import { PushNotificationService } from '@angular-monorepo/push-notification';
 import { SessionSyncService } from '@angular-monorepo/session-sync';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 
@@ -15,11 +16,17 @@ export class AppShellComponent implements OnInit {
     private inactivityTimeout?: ReturnType<typeof setTimeout>;
     private takeoverCheckIntervalId?: ReturnType<typeof setInterval>;
 
-    constructor(private sessionSync: SessionSyncService) {}
+    constructor(private sessionSync: SessionSyncService, private pushNotifService: PushNotificationService) {
+      // navigator.serviceWorker.register('firebase-messaging-sw.js').then((registration)=> {
+      //   console.log("service worker register")
+      // }).catch((err)=>{
+      //   console.log('service wroker registratoin failed', err)
+      // })
+    }
 
     ngOnInit(): void {
       console.log('[AppShell] Component initialized');
-
+      this.pushNotifService.listenForMessages()
        if ('locks' in navigator) {
       navigator.locks.request('main-tab-lock', async () => {
         console.log('[AppShell] Holding main-tab-lock');
@@ -46,6 +53,11 @@ export class AppShellComponent implements OnInit {
 
       document.addEventListener('visibilitychange', this.handleTabVisibility);
     }
+
+    
+  requestNotificationPermission(){
+    this.pushNotifService.requestPermission();
+  }
 
     ngOnDestroy(): void {
       if (this.takeoverCheckIntervalId) clearInterval(this.takeoverCheckIntervalId);

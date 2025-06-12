@@ -19,7 +19,8 @@
           "apps/inventory/src/favicon.ico",
           "apps/inventory/src/assets",
           "apps/inventory/src/manifest.webmanifest",
-          "apps/inventory/src/offline.html"
+          "apps/inventory/src/offline.html",
+          "apps/inventory/src/firebase-messaging-sw.js"
         ],
         "styles": ["apps/inventory/src/styles.css"],
         "scripts": [],

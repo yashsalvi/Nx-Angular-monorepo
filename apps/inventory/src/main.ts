@@ -10,7 +10,8 @@ bootstrapApplication(AppComponent, {
   providers: [
     ...appConfig.providers,
     provideServiceWorker('ngsw-worker.js', {
-      enabled: environment.production,
+      enabled: true,
     }),
+    provideServiceWorker('firebase-messaging-sw.js'),
   ],
 }).catch((err) => console.error(err));
