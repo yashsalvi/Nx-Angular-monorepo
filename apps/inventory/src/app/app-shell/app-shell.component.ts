@@ -12,22 +12,16 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
   styleUrls: ['./app-shell.component.css']
 })
 export class AppShellComponent implements OnInit {
-    isMainTab = false;
-    private inactivityTimeout?: ReturnType<typeof setTimeout>;
-    private takeoverCheckIntervalId?: ReturnType<typeof setInterval>;
+  isMainTab = false;
+  private inactivityTimeout?: ReturnType<typeof setTimeout>;
+  private takeoverCheckIntervalId?: ReturnType<typeof setInterval>;
 
-    constructor(private sessionSync: SessionSyncService, private pushNotifService: PushNotificationService) {
-      // navigator.serviceWorker.register('firebase-messaging-sw.js').then((registration)=> {
-      //   console.log("service worker register")
-      // }).catch((err)=>{
-      //   console.log('service wroker registratoin failed', err)
-      // })
-    }
+  constructor(private sessionSync: SessionSyncService, private pushNotifService: PushNotificationService) { }
 
-    ngOnInit(): void {
-      console.log('[AppShell] Component initialized');
-      this.pushNotifService.listenForMessages()
-       if ('locks' in navigator) {
+  ngOnInit(): void {
+    console.log('[AppShell] Component initialized');
+    this.pushNotifService.listenForMessages()
+    if ('locks' in navigator) {
       navigator.locks.request('main-tab-lock', async () => {
         console.log('[AppShell] Holding main-tab-lock');
 
@@ -37,34 +31,34 @@ export class AppShellComponent implements OnInit {
       });
     }
 
-      const session = { userId: 'abc123', token: 'securetoken' };
-      localStorage.setItem('session', JSON.stringify(session));
-      this.sessionSync.syncSessionToOtherTabs(session);
+    const session = { userId: 'abc123', token: 'securetoken' };
+    localStorage.setItem('session', JSON.stringify(session));
+    this.sessionSync.syncSessionToOtherTabs(session);
 
-      console.log('Initial session sync done:', this.sessionSync.getCurrentSession());
+    console.log('Initial session sync done:', this.sessionSync.getCurrentSession());
 
 
-      setTimeout(() => this.checkMainTab(), 1500);
+    setTimeout(() => this.checkMainTab(), 1500);
 
-      
-      this.takeoverCheckIntervalId = setInterval(() => {
-        this.checkMainTab();
-      }, 5000);
 
-      document.addEventListener('visibilitychange', this.handleTabVisibility);
-    }
+    this.takeoverCheckIntervalId = setInterval(() => {
+      this.checkMainTab();
+    }, 5000);
 
-    
-  requestNotificationPermission(){
+    document.addEventListener('visibilitychange', this.handleTabVisibility);
+  }
+
+
+  requestNotificationPermission() {
     this.pushNotifService.requestPermission();
   }
 
-    ngOnDestroy(): void {
-      if (this.takeoverCheckIntervalId) clearInterval(this.takeoverCheckIntervalId);
-      if (this.inactivityTimeout) clearTimeout(this.inactivityTimeout);
-      document.removeEventListener('visibilitychange', this.handleTabVisibility);
-      this.sessionSync.stopMainTabStatus();
-    }
+  ngOnDestroy(): void {
+    if (this.takeoverCheckIntervalId) clearInterval(this.takeoverCheckIntervalId);
+    if (this.inactivityTimeout) clearTimeout(this.inactivityTimeout);
+    document.removeEventListener('visibilitychange', this.handleTabVisibility);
+    this.sessionSync.stopMainTabStatus();
+  }
 
   private checkMainTab(): void {
     // Don't re-elect if already the main tab
@@ -80,13 +74,13 @@ export class AppShellComponent implements OnInit {
     }
   }
 
-    private handleTabVisibility = () => {
-      if (document.hidden) {
-        this.inactivityTimeout = setTimeout(() => {
-          alert('⚠️ You have been inactive or switched tabs.');
-        }, 3000);
-      } else {
-        if (this.inactivityTimeout) clearTimeout(this.inactivityTimeout);
-      }
-    };
+  private handleTabVisibility = () => {
+    if (document.hidden) {
+      this.inactivityTimeout = setTimeout(() => {
+        alert('⚠️ You have been inactive or switched tabs.');
+      }, 3000);
+    } else {
+      if (this.inactivityTimeout) clearTimeout(this.inactivityTimeout);
+    }
+  };
 }

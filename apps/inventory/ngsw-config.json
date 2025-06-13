@@ -1,6 +1,8 @@
 {
   "index": "/index.html",
-"navigationUrls": ["/**"],
+  "navigationUrls": [
+    "/**"
+  ],
   "assetGroups": [
     {
       "name": "app",
@@ -19,7 +21,6 @@
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "urls": [],
         "files": [
           "/assets/**",
           "/*.(png|jpg|jpeg|svg|gif)"

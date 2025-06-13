@@ -8,12 +8,16 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/inventory",
         "index": "apps/inventory/src/index.html",
-      "main": "apps/inventory/src/main.ts",
-        "polyfills": ["zone.js"],
+        "main": "apps/inventory/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/inventory/tsconfig.app.json",
         "assets": [
           "apps/inventory/src/favicon.ico",
@@ -22,10 +26,12 @@
           "apps/inventory/src/offline.html",
           "apps/inventory/src/firebase-messaging-sw.js"
         ],
-        "styles": ["apps/inventory/src/styles.css"],
+        "styles": [
+          "apps/inventory/src/styles.css"
+        ],
         "scripts": [],
-                  "serviceWorker": true,
-          "ngswConfigPath": "apps/inventory/ngsw-config.json"
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/inventory/ngsw-config.json"
       },
       "configurations": {
         "production": {
