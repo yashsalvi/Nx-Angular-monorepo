@@ -1,12 +1,12 @@
 import { ProductListComponent } from '@angular-monorepo/products';
-import { PushNotificationService } from '@angular-monorepo/push-notification';
+import { PushNotificationService, NotificationPermissionComponent } from '@angular-monorepo/push-notification';
 import { SessionSyncService } from '@angular-monorepo/session-sync';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [ProductListComponent],
+  imports: [ProductListComponent, NotificationPermissionComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app-shell.component.html',
   styleUrls: ['./app-shell.component.css']
@@ -48,10 +48,6 @@ export class AppShellComponent implements OnInit {
     document.addEventListener('visibilitychange', this.handleTabVisibility);
   }
 
-
-  requestNotificationPermission() {
-    this.pushNotifService.requestPermission();
-  }
 
   ngOnDestroy(): void {
     if (this.takeoverCheckIntervalId) clearInterval(this.takeoverCheckIntervalId);

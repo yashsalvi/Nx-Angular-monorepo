@@ -7,15 +7,18 @@ export class PushNotificationService {
 
   constructor(private messaging: Messaging) { }
 
-  requestPermission(): void {
-    Notification.requestPermission().then((permission) => {
+  requestPermission(): Promise<string> {
+    return Notification.requestPermission().then((permission) => {
       if (permission === 'granted') {
         this.getDeviceToken()
+        return 'granted'
       } else {
         console.warn('Notification permission denied:', permission)
+            return 'denied'
       }
     }).catch((err) => {
       console.error('Permission request error:', err)
+       return 'error'
     })
   }
 

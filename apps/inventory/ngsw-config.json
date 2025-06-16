@@ -28,6 +28,20 @@
       }
     }
   ],
+  "dataGroups": [
+    {
+      "name": "weather-api-cache",
+      "urls": [
+        "https://api.open-meteo.com/v1/**"
+      ],
+      "cacheConfig" : {
+        "strategy": "freshness",
+        "maxSize": 20,
+        "maxAge": "6h",
+        "timeout": "10s"
+      }
+    }
+  ],
   "navigationFallback": {
     "index": "/index.html",
     "rewrite": true

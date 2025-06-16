@@ -1,0 +1,6 @@
+<div class="permission-container">
+<p>Notification Permission Status: <strong> {{ permissionStatus }}</strong></p>
+<button (click)="requestPermission()" [disabled]="permissionStatus  === 'granted' || permissionStatus  !== 'Waiting' ">
+    Enable Notifications
+</button>
+</div>
