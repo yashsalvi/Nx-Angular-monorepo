@@ -24,15 +24,16 @@ export class RecurrencePickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.recurrenceForm = this.fb.group({
-      startDate: ['', Validators.required],
-      repeat: ['Daily', Validators.required],
-      every: [1, [Validators.required, Validators.min(1)]],
-      endDate: [''],
-      weekdays: [[]],
-      monthDay: [1],
-      monthWeek: ['First'],
-      monthWeekday: ['Monday']
-    });
+  startDate: ['', Validators.required],
+  repeat: ['Daily', Validators.required],
+  every: [1, [Validators.required, Validators.min(1)]],
+  endDate: [''],
+  weekdays: [[]],
+  monthDay: [1],
+  monthWeek: ['First'],
+  monthWeekday: ['Monday'],
+  monthMode: ['day']
+})
 
     this.recurrenceForm.valueChanges.subscribe(() => {
       this.generateDescription();
