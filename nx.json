@@ -28,7 +28,7 @@
       "inputs": ["production", "^production"]
     },
     "e2e-ci--**/**": {
-      "dependsOn": ["^angular-store:build", "^inventory:build"]
+      "dependsOn": ["^angular-store:build", "^inventory:build", "^build"]
     }
   },
   "plugins": [

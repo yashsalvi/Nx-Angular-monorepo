@@ -1,0 +1,69 @@
+<div class="recurrence-container">
+  <h3>Recurrence</h3>
+
+  <form [formGroup]="recurrenceForm">
+    <label>Start</label>
+    <input type="date" formControlName="startDate" />
+
+    <label>Repeat</label>
+    <select formControlName="repeat">
+      <option *ngFor="let type of repeatTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <div>
+      <label>Every</label>
+      <input type="number" formControlName="every" min="1" />
+      <span *ngIf="recurrenceForm.value.repeat === 'Daily'">day(s)</span>
+      <span *ngIf="recurrenceForm.value.repeat === 'Weekly'">week(s)</span>
+      <span *ngIf="recurrenceForm.value.repeat === 'Monthly'">month(s)</span>
+    </div>
+
+
+    <div *ngIf="recurrenceForm.value.repeat === 'Weekly'">
+      <label>On</label>
+      <div class="weekdays">
+        <button
+          *ngFor="let day of weekdays; index as i"
+          type="button"
+          [class.selected]="selectedWeekdays[i]"
+          (click)="toggleWeekday(i)"
+        >
+          {{ day }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="recurrenceForm.value.repeat === 'Monthly'">
+      <label>On</label>
+      <div>
+        <input type="radio" [checked]="true" (change)="recurrenceForm.patchValue({ monthDay: 14 })" />
+        <select formControlName="monthDay">
+          <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">{{ i + 1 }}</option>
+        </select>
+        <span>day</span>
+      </div>
+
+      <div>
+        <input type="radio" (change)="recurrenceForm.patchValue({ monthDay: null })" />
+        <select formControlName="monthWeek">
+          <option *ngFor="let w of monthlyWeekOrder">{{ w }}</option>
+        </select>
+        <select formControlName="monthWeekday">
+          <option *ngFor="let d of fullWeekdays">{{ d }}</option>
+        </select>
+      </div>
+    </div>
+
+    <label>End</label>
+    <input type="date" formControlName="endDate" />
+
+    <div class="description">
+      {{ description }}
+    </div>
+
+    <div class="actions">
+      <button type="button" (click)="resetForm()">Cancel</button>
+      <button type="button" (click)="save()">Save</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,59 @@
+.container {
+  max-width: 500px;
+  margin: auto;
+  font-family: sans-serif;
+}
+
+input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-right: 10px;
+  padding: 6px 10px;
+}
+
+.description {
+  margin-top: 10px;
+  font-style: italic;
+  color: #333;
+}
+
+.results p {
+  padding: 4px;
+  margin: 2px 0;
+}
+
+.results p.active {
+  font-weight: bold;
+  color: green;
+}
+
+.results p.invalid {
+  font-weight: bold;
+  color: red;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.buttons button {
+  margin-right: 6px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+
+.recurrence-wrapper {
+  margin-top: 30px;
+  padding: 20px;
+  max-width: 510px;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 1px solid #ccc;
+}

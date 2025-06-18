@@ -1,0 +1,39 @@
+<div class="container">
+  <h2>Cron Expression Evaluator</h2>
+
+  <form [formGroup]="cronForm" (ngSubmit)="evaluateExpression()">
+    <input
+      type="text"
+      formControlName="cron"
+      placeholder="Enter cron expression"
+    />
+
+    <div *ngIf="isCronInvalid" class="error">
+      ❌ Cron must have exactly 6 fields: second minute hour day month dayOfWeek
+    </div>
+
+    <div class="buttons">
+      <button type="submit" [disabled]="cronForm.invalid">Evaluate</button>
+      | <button type="button" (click)="resetForm()">Reset</button> 
+      | <button type="button" (click)="generateRandomCron()">🎲 Random</button>
+    </div>
+  </form>
+
+  <div class="results">
+    <p [ngClass]="getClass('seconds')">Seconds</p>
+    <p [ngClass]="getClass('minutes')">Minutes</p>
+    <p [ngClass]="getClass('hours')">Hours</p>
+    <p [ngClass]="getClass('days')">Days</p>
+    <p [ngClass]="getClass('dayOfWeek')">DayOfWeek</p>
+    <p [ngClass]="getClass('month')">Month</p>
+  </div>
+
+  <div *ngIf="cronDescription" class="description">
+  📝 <strong>Description:</strong> {{ cronDescription }}
+</div>
+
+</div>
+
+<div class="recurrence-wrapper">
+  <app-recurrence-picker></app-recurrence-picker>
+</div>
