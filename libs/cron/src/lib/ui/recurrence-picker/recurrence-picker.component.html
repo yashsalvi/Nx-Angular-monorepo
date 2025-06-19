@@ -34,24 +34,28 @@
     </div>
 
 <div *ngIf="recurrenceForm.value.repeat === 'Monthly'" class="monthly-mode">
-  <label>On</label>
-
-  <div class="radio-option">
-    <input type="radio" formControlName="monthMode" value="day" />
-    <select formControlName="monthDay">
-      <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">{{ i + 1 }}</option>
-    </select>
-    <span>day</span>
+  <div class="radio-line">
+    <label>On</label>
+    <div class="radio-option">
+      <input type="radio" formControlName="monthMode" value="day" />
+      <select formControlName="monthDay">
+        <option *ngFor="let d of [].constructor(31); let i = index" [value]="i + 1">{{ i + 1 }}</option>
+      </select>
+      <span>day</span>
+    </div>
   </div>
 
-  <div class="radio-option">
-    <input type="radio" formControlName="monthMode" value="week" />
-    <select formControlName="monthWeek">
-      <option *ngFor="let w of monthlyWeekOrder">{{ w }}</option>
-    </select>
-    <select formControlName="monthWeekday">
-      <option *ngFor="let d of fullWeekdays">{{ d }}</option>
-    </select>
+  <div class="radio-line">
+    <label class="empty-label"></label>
+    <div class="radio-option">
+      <input type="radio" formControlName="monthMode" value="week" />
+      <select formControlName="monthWeek">
+        <option *ngFor="let w of monthlyWeekOrder">{{ w }}</option>
+      </select>
+      <select formControlName="monthWeekday">
+        <option *ngFor="let d of fullWeekdays">{{ d }}</option>
+      </select>
+    </div>
   </div>
 </div>
 

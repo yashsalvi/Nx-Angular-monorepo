@@ -1,9 +1,14 @@
-export function describeCron(cron: string, startDateStr?: string, endDateStr?: string): string {
+export function describeCron(
+  cron: string,
+  startDateStr?: string,
+  endDateStr?: string,
+  options: { mode?: 'detailed' | 'human' } = { mode: 'detailed' }
+): string {
   const parts = cron.trim().split(/\s+/);
-  console.log(parts)
   if (parts.length !== 6) return 'Invalid cron expression';
-  debugger
+
   const [sec, min, hr, day, month, dow] = parts;
+  const mode = options.mode ?? 'detailed';
 
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const monthNames = [
@@ -38,31 +43,30 @@ console.log(value)
     return formatSingleValue(value, unit, range, minRange, maxRange);
   };
 
-const formatSingleValue = (
-  value: string,
-  unit: string,
-  range?: string[],
-  min?: number,
-  max?: number
-): string => {
-  const num = parseInt(value, 10);
-console.log(num)
-  if (!isNaN(num) && min !== undefined && max !== undefined) {
-    const isValid = num >= min && num <= max;
+  const formatSingleValue = (
+    value: string,
+    unit: string,
+    range?: string[],
+    min?: number,
+    max?: number
+  ): string => {
+    const num = parseInt(value, 10);
+ console.log(value)
+    if (!isNaN(num) && min !== undefined && max !== undefined) {
+      const isValid = num >= min && num <= max;
 
-    if (range) {
-      const rangeIndex = unit === 'month' ? num - 1 : num;
-      const isInRange = unit === 'month' ? num >= 1 && num <= 12 : isValid;
+      if (range) {
+        const rangeIndex = unit === 'month' ? num - 1 : num;
+        const isInRange = unit === 'month' ? num >= 1 && num <= 12 : isValid;
+   console.log(rangeIndex)
+        return isInRange ? range[rangeIndex] : `Invalid ${unit}: ${num}`;
+      }
 
-      return isInRange ? range[rangeIndex] : `Invalid ${unit}: ${num}`;
+      return isValid ? `${unit} ${num}` : `Invalid ${unit}: ${num}`;
     }
-console.log(range)
-    return isValid ? `${unit} ${num}` : `Invalid ${unit}: ${num}`;
-  }
 
-  return `${unit} ${value}`;
-};
-
+    return `${unit} ${value}`;
+  };
 
   const secondsDesc = formatField(sec, 'second', undefined, 0, 59);
   const minutesDesc = formatField(min, 'minute', undefined, 0, 59);
@@ -73,29 +77,59 @@ console.log(range)
 
   let sentenceParts: string[] = [];
 
-  if (min.startsWith('*/') && hr === '*' && day === '*' && month === '*' && dow === '*') {
-    sentenceParts.push(`Every ${min.slice(2)} minutes`);
-  } else if (hr !== '*' && min !== '*' && dow === '*' && day === '*' && month === '*') {
-    sentenceParts.push(`At ${hr.padStart(2, '0')}:${min.padStart(2, '0')}`);
+  const isDefaultTime = sec === '0' && min === '0' && hr === '12';
+  const isDaily = day === '*' && month === '*' && dow === '*';
+const isWeekly = dow !== '*' && day === '*' && month === '*';
+const isMonthlyOnWeekday = dow.includes('#') && day === '?' && month === '*';
+  const isMonthly = day !== '*' && day !== '?' && month === '*';
+
+  if (mode === 'human') {
+    if (!isDefaultTime) {
+      sentenceParts.push(`at ${hr.padStart(2, '0')}:${min.padStart(2, '0')}:${sec.padStart(2, '0')}`);
+    }
+ console.log(isDefaultTime)
+    if (isDaily) {
+      sentenceParts.push(`every day`);
+    } else if (isWeekly) {
+      sentenceParts.push(`every week on ${dowDesc}`);
+    } else if (isMonthly) {
+      sentenceParts.push(`every month on day ${day}`);
+    } else if (isMonthlyOnWeekday) {
+    const [dayNum, weekNum] = dow.split('#').map(Number);
+    const weekNames = ['First', 'Second', 'Third', 'Fourth', 'Last'];
+    const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    if (!isNaN(dayNum) && !isNaN(weekNum)) {
+      const weekdayName = weekdayNames[dayNum] ?? `Invalid day (${dayNum})`;
+      const weekLabel = weekNames[weekNum - 1] ?? `${weekNum}th`;
+      sentenceParts.push(`every month on the ${weekLabel} ${weekdayName}`);
+    } else {
+      sentenceParts.push(`${secondsDesc}, ${minutesDesc}, ${hoursDesc}`);
+    }
+     console.log(weekNum)
+  }
+    else {
+      sentenceParts.push(`${secondsDesc}, ${minutesDesc}, ${hoursDesc}`);
+    }
   } else {
     sentenceParts.push(`${secondsDesc}, ${minutesDesc}, ${hoursDesc}`);
+
+    if (dow !== '*' && dow !== '?') {
+      sentenceParts.push(`on ${dowDesc}`);
+    }
+
+    const hasSpecificDay = day !== '*' && day !== '?';
+    const hasSpecificMonth = month !== '*' && month !== '?';
+
+    if (hasSpecificDay && hasSpecificMonth) {
+      sentenceParts.push(`on day ${day} of ${monthDesc}`);
+    } else if (hasSpecificDay) {
+      sentenceParts.push(`on day ${day}`);
+    } else if (hasSpecificMonth) {
+      sentenceParts.push(`in ${monthDesc}`);
+    }
   }
 
-  if (dow !== '*' && dow !== '?') {
-    sentenceParts.push(`on ${dowDesc}`);
-  }
-
-  const hasSpecificDay = day !== '*' && day !== '?';
-  const hasSpecificMonth = month !== '*' && month !== '?';
-console.log(hasSpecificMonth)
-  if (hasSpecificDay && hasSpecificMonth) {
-    sentenceParts.push(`on day ${day} of ${monthDesc}`);
-  } else if (hasSpecificDay) {
-    sentenceParts.push(`on day ${day}`);
-  } else if (hasSpecificMonth) {
-    sentenceParts.push(`in ${monthDesc}`);
-  }
-console.log(sentenceParts)
   if (startDateStr) {
     const start = new Date(startDateStr);
     sentenceParts.push(`starting ${start.toLocaleDateString('en-GB', {

@@ -22,23 +22,35 @@ export class RecurrencePickerComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInit(): void {
-    this.recurrenceForm = this.fb.group({
-  startDate: ['', Validators.required],
-  repeat: ['Daily', Validators.required],
-  every: [1, [Validators.required, Validators.min(1)]],
-  endDate: [''],
-  weekdays: [[]],
-  monthDay: [1],
-  monthWeek: ['First'],
-  monthWeekday: ['Monday'],
-  monthMode: ['day']
-})
+ngOnInit(): void {
+  this.recurrenceForm = this.fb.group({
+    startDate: ['', Validators.required],
+    repeat: ['Daily', Validators.required],
+    every: [1, [Validators.required, Validators.min(1)]],
+    endDate: [''],
+    weekdays: [[]],
+    monthDay: [{ value: 1, disabled: false }],
+    monthWeek: [{ value: 'First', disabled: true }],
+    monthWeekday: [{ value: 'Sunday', disabled: true }],
+    monthMode: ['day']
+  });
 
-    this.recurrenceForm.valueChanges.subscribe(() => {
-      this.generateDescription();
-    });
-  }
+  this.recurrenceForm.get('monthMode')?.valueChanges.subscribe(mode => {
+    if (mode === 'day') {
+      this.recurrenceForm.get('monthDay')?.enable();
+      this.recurrenceForm.get('monthWeek')?.disable();
+      this.recurrenceForm.get('monthWeekday')?.disable();
+    } else {
+      this.recurrenceForm.get('monthDay')?.disable();
+      this.recurrenceForm.get('monthWeek')?.enable();
+      this.recurrenceForm.get('monthWeekday')?.enable();
+    }
+  });
+   console.log(this.recurrenceForm)
+  this.recurrenceForm.valueChanges.subscribe(() => {
+    this.generateDescription();
+  });
+}
 
   toggleWeekday(index: number) {
     this.selectedWeekdays[index] = !this.selectedWeekdays[index]
@@ -54,18 +66,17 @@ generateDescription() {
   const startDate = val.startDate || undefined
   const endDate = val.endDate || undefined
   console.log(endDate)
-  this.description = describeCron(cron, startDate, endDate)
+  this.description = describeCron(cron, startDate, endDate, { mode: 'human' })
 }
 
 buildCronFromRecurrenceForm(val: any) {
-   console.log(val)
-  let seconds = '0'
-  let minutes = '0'
-  let hours = '12'
+  let seconds = '0';
+  let minutes = '0';
+  let hours = '12';
 
-  let day = '*'
-  let month = '*'
-  let dayOfWeek = '*'
+  let day = '*';
+  let month = '*';
+  let dayOfWeek = '*';
 
   if (val.repeat === 'Weekly' && val.weekdays.length > 0) {
     const weekdayMap: any = {
@@ -77,18 +88,38 @@ buildCronFromRecurrenceForm(val: any) {
       Friday: '5',
       Saturday: '6'
     };
-    dayOfWeek = val.weekdays.map((day: string) => weekdayMap[day]).join(',')
+    dayOfWeek = val.weekdays.map((day: string) => weekdayMap[day]).join(',');
   }
 
   if (val.repeat === 'Monthly') {
-    if (val.monthDay) {
-      day = `${val.monthDay}`
-    } else {
-      day = '?'
+    if (val.monthMode === 'day' && val.monthDay) {
+      day = `${val.monthDay}`;
+      dayOfWeek = '*';
+    } else if (val.monthMode === 'week' && val.monthWeek && val.monthWeekday) {
+      const weekdayMap: any = {
+        Sunday: '0',
+        Monday: '1',
+        Tuesday: '2',
+        Wednesday: '3',
+        Thursday: '4',
+        Friday: '5',
+        Saturday: '6'
+      };
+      debugger
+      const orderMap: any = {
+        First: '1',
+        Second: '2',
+        Third: '3',
+        Fourth: '4',
+        Last: '5'
+      };
+
+      day = '?';
+      dayOfWeek = `${weekdayMap[val.monthWeekday]}#${orderMap[val.monthWeek]}`;
     }
   }
 
-  return `${seconds} ${minutes} ${hours} ${day} ${month} ${dayOfWeek}`
+  return `${seconds} ${minutes} ${hours} ${day} ${month} ${dayOfWeek}`;
 }
 
 
