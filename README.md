@@ -27,7 +27,7 @@ cd <repo-folder>
 npm install
 
 
-Common Error Issues: 
+## Common Error Issues: 
 
 1.npx: command not found 
 
@@ -35,7 +35,7 @@ npx not available in system
 
 Install latest npm: npm install -g npm 
 
-2. bash: nx: command not found 
+2.bash: nx: command not found 
 
 Running nx directly without global install 
 
@@ -49,17 +49,21 @@ Run: npm install -D @nrwl/angular
 
 
 🚀 Running Applications
+
 You can serve each application individually using:
 
 Inventory App
 
 npx nx run inventory:serve
+
 Cron Evaluator App
 
 npx nx run cron-evaluator:serve
+
 Angular Store App
 
 npx nx run angular-store:serve
+
 To build any of the apps:
 
 nx build <app-name>
