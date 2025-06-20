@@ -3,7 +3,9 @@
 This is an Nx-based monorepo that contains multiple Angular applications and shared libraries. The current applications in this workspace are:
 
 - **Inventory** (`apps/inventory`)
+
 - **Cron Evaluator** (`apps/cron-evaluator`)
+
 - **Angular Store** (`apps/angular-store`)
 
 ---
@@ -13,17 +15,22 @@ This is an Nx-based monorepo that contains multiple Angular applications and sha
 Ensure the following tools are installed:
 
 - [Node.js](https://nodejs.org/) (v16+ recommended)
+
 - [Yarn](https://classic.yarnpkg.com/en/docs/install) or `npm`
+
 - [Nx CLI](https://nx.dev/cli) globally (optional but recommended)
 
 npm install -g nx
 
 
-🛠️ Installation & Setup
+## 🛠️ Installation & Setup
+
 Clone the repository and install dependencies:
 
-git clone <repo-url>
-cd <repo-folder>
+git clone repo-url
+
+cd repo-folder
+
 npm install
 
 
@@ -48,7 +55,7 @@ Preset not installed in workspace
 Run: npm install -D @nrwl/angular 
 
 
-🚀 Running Applications
+## 🚀 Running Applications
 
 You can serve each application individually using:
 
@@ -70,7 +77,7 @@ nx build <app-name>
 # Example:
 nx build inventory
 
-🧠 Useful Nx Commands
+## 🧠 Useful Nx Commands
 Run Affected Projects
 Useful after making a change to see what apps/libraries are impacted:
 
