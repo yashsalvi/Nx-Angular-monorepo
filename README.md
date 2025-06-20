@@ -26,6 +26,28 @@ git clone <repo-url>
 cd <repo-folder>
 npm install
 
+
+Common Error Issues: 
+
+1.npx: command not found 
+
+npx not available in system 
+
+Install latest npm: npm install -g npm 
+
+2. bash: nx: command not found 
+
+Running nx directly without global install 
+
+Use npx nx ... instead 
+
+3.NX Unable to resolve @nrwl/angular:lib 
+
+Preset not installed in workspace 
+
+Run: npm install -D @nrwl/angular 
+
+
 🚀 Running Applications
 You can serve each application individually using:
 
