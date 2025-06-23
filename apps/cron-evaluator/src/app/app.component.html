@@ -17,6 +17,25 @@
       | <button type="button" (click)="resetForm()">Reset</button> 
       | <button type="button" (click)="generateRandomCron()">🎲 Random</button>
     </div>
+ <br>
+
+<div class="template-buttons">
+  <input formControlName="templateLabel"  [class.invalid-input]="cronForm.get('templateLabel')?.invalid && cronForm.get('templateLabel')?.touched" placeholder="Label for template" />
+  <button type="button"  [disabled]="!cronForm.valid || !cronForm.get('templateLabel')?.value?.trim()" (click)="saveTemplate()">💾 Save Template</button>
+  <button type="button" [disabled]="savedTemplates.length === 0" (click)="exportTemplates()">⬇️ Export</button>
+  <input type="file" (change)="importTemplates($event)" />
+</div>
+
+
+<div *ngIf="savedTemplates.length > 0">
+  <label>Select Template:</label>
+  <select (change)="loadTemplate($event)">
+    <option value="">--Choose--</option>
+    <option *ngFor="let tmpl of savedTemplates" [value]="tmpl.cron">
+      {{ tmpl.templateLabel }}
+    </option>
+  </select>
+</div>
   </form>
 
   <div class="results">

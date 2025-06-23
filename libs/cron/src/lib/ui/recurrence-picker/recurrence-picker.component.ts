@@ -17,7 +17,7 @@ export class RecurrencePickerComponent implements OnInit {
   fullWeekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   monthlyWeekOrder = ['First', 'Second', 'Third', 'Fourth', 'Last']
   description: string = ''
-
+exportedCron: string = ''
   selectedWeekdays: boolean[] = Array(7).fill(false)
 
   constructor(private fb: FormBuilder) {}
@@ -31,7 +31,7 @@ ngOnInit(): void {
     weekdays: [[]],
     monthDay: [{ value: 1, disabled: false }],
     monthWeek: [{ value: 'First', disabled: true }],
-    monthWeekday: [{ value: 'Sunday', disabled: true }],
+    monthWeekday: [{ value: '', disabled: true }],
     monthMode: ['day']
   });
 
@@ -47,6 +47,30 @@ ngOnInit(): void {
     }
   });
    console.log(this.recurrenceForm)
+
+    this.recurrenceForm.get('repeat')?.valueChanges.subscribe(repeatType => {
+    const today = new Date()
+    const dayIndex = today.getDay()
+    const weekdayName = this.fullWeekdays[dayIndex]
+
+    if (repeatType === 'Weekly') {
+      this.selectedWeekdays = Array(7).fill(false)
+      this.selectedWeekdays[dayIndex] = true
+      this.recurrenceForm.get('weekdays')?.setValue([weekdayName])
+    }
+
+    if (repeatType === 'Monthly') {
+  const today = new Date()
+  const dayIndex = today.getDay()
+  const weekdayName = this.fullWeekdays[dayIndex]
+  this.recurrenceForm.patchValue({
+    monthWeek: 'First',
+    monthWeekday: weekdayName
+  })
+    }
+    console.log(this.selectedWeekdays)
+  });
+
   this.recurrenceForm.valueChanges.subscribe(() => {
     this.generateDescription();
   });
@@ -62,7 +86,7 @@ ngOnInit(): void {
 generateDescription() {
   const val = this.recurrenceForm.value;
   const cron = this.buildCronFromRecurrenceForm(val)
-
+ console.log('Generated CRON:', cron);
   const startDate = val.startDate || undefined
   const endDate = val.endDate || undefined
   console.log(endDate)
@@ -132,6 +156,16 @@ buildCronFromRecurrenceForm(val: any) {
     this.selectedWeekdays = Array(7).fill(false);
     this.description = '';
   }
+
+  exportCron() {
+  const val = this.recurrenceForm.value;
+  const cron = this.buildCronFromRecurrenceForm(val);
+  this.exportedCron = cron;
+
+  navigator.clipboard.writeText(cron).then(() => {
+    console.log('Cron copied to clipboard:', cron);
+  });
+}
 
   save() {
     console.log('Saved recurrence:', this.recurrenceForm.value);

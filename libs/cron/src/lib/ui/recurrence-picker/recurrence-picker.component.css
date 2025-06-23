@@ -130,3 +130,15 @@ select.ng-invalid.ng-touched {
   min-width: 117px;
 }
 
+.exported-cron {
+  margin-top: 10px;
+  font-family: monospace;
+  background-color: #fff;
+  color: #000;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  word-break: break-word;
+}
+
+

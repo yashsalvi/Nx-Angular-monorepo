@@ -50,10 +50,10 @@
     <div class="radio-option">
       <input type="radio" formControlName="monthMode" value="week" />
       <select formControlName="monthWeek">
-        <option *ngFor="let w of monthlyWeekOrder">{{ w }}</option>
+        <option [value]="w" *ngFor="let w of monthlyWeekOrder">{{ w }}</option>
       </select>
       <select formControlName="monthWeekday">
-        <option *ngFor="let d of fullWeekdays">{{ d }}</option>
+        <option [value]="d" *ngFor="let d of fullWeekdays">{{ d }}</option>
       </select>
     </div>
   </div>
@@ -71,6 +71,13 @@
     <div class="actions">
       <button type="button" (click)="resetForm()">Cancel</button>
       <button type="button" (click)="save()">Save</button>
+      <button type="button" (click)="exportCron()" [disabled]="!recurrenceForm.valid">
+    📤 Export as Cron Expression
+  </button>
     </div>
+    <div *ngIf="exportedCron" class="exported-cron">
+  <strong>Generated Cron: </strong>
+  <code>{{ exportedCron }}</code>
+</div>
   </form>
 </div>
