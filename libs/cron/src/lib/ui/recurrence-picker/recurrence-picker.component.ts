@@ -60,9 +60,6 @@ ngOnInit(): void {
     }
 
     if (repeatType === 'Monthly') {
-  const today = new Date()
-  const dayIndex = today.getDay()
-  const weekdayName = this.fullWeekdays[dayIndex]
   this.recurrenceForm.patchValue({
     monthWeek: 'First',
     monthWeekday: weekdayName
@@ -71,8 +68,23 @@ ngOnInit(): void {
     console.log(this.selectedWeekdays)
   });
 
-  this.recurrenceForm.valueChanges.subscribe(() => {
+  this.recurrenceForm.valueChanges.subscribe((val) => {
     this.generateDescription();
+
+    const start = new Date(val.startDate);
+    const end = new Date(val.endDate);
+
+    if (val.endDate && start > end) {
+      this.recurrenceForm.get('endDate')?.setErrors({ logicalError: 'End date cannot be before start date.' });
+    } else {
+      this.recurrenceForm.get('endDate')?.setErrors(null);
+    }
+
+    if (val.repeat === 'Weekly' && (!val.weekdays || val.weekdays.length === 0)) {
+      this.recurrenceForm.get('weekdays')?.setErrors({ logicalError: 'Select at least one weekday.' });
+    } else {
+      this.recurrenceForm.get('weekdays')?.setErrors(null);
+    }
   });
 }
 

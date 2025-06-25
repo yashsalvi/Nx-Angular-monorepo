@@ -2,16 +2,22 @@
   <h3>Recurrence</h3>
 
   <form [formGroup]="recurrenceForm">
-    <label>Start</label>
+    <label>Start
+       <span title="The date when the recurrence should begin.">🛈</span>
+    </label>
     <input type="date" formControlName="startDate" />
 
-    <label>Repeat</label>
+    <label>Repeat
+       <span title="Choose how often the event should recur.">🛈</span>
+    </label>
     <select formControlName="repeat">
       <option *ngFor="let type of repeatTypes" [value]="type">{{ type }}</option>
     </select>
 
     <div>
-      <label>Every</label>
+      <label>Every
+        <span title="Specifies the interval for the recurrence based on the selected type.">🛈</span>
+      </label>
       <input type="number" formControlName="every" min="1" />
       <span *ngIf="recurrenceForm.value.repeat === 'Daily'">day(s)</span>
       <span *ngIf="recurrenceForm.value.repeat === 'Weekly'">week(s)</span>
@@ -20,7 +26,9 @@
 
 
     <div *ngIf="recurrenceForm.value.repeat === 'Weekly'">
-      <label>On</label>
+      <label>On
+        <span title="Select the days of the week this event should repeat on.">🛈</span>
+      </label>
       <div class="weekdays">
         <button
           *ngFor="let day of weekdays; index as i"
@@ -35,7 +43,9 @@
 
 <div *ngIf="recurrenceForm.value.repeat === 'Monthly'" class="monthly-mode">
   <div class="radio-line">
-    <label>On</label>
+    <label>On
+       <span title="Choose between a specific day of the month or a pattern (like the second Monday).">🛈</span>
+    </label>
     <div class="radio-option">
       <input type="radio" formControlName="monthMode" value="day" />
       <select formControlName="monthDay">
@@ -61,8 +71,13 @@
 
 
 
-    <label>End</label>
+    <label>End
+      <span title="The date when the recurrence should stop. Optional.">🛈</span>
+    </label>
     <input type="date" formControlName="endDate" />
+<div *ngIf="recurrenceForm.get('endDate')?.errors?.['logicalError']" class="error">
+  ⚠️ {{ recurrenceForm.get('endDate')?.errors?.['logicalError'] }}
+</div>
 
     <div class="description">
       {{ description }}
@@ -70,7 +85,7 @@
 
     <div class="actions">
       <button type="button" (click)="resetForm()">Cancel</button>
-      <button type="button" (click)="save()">Save</button>
+      <button [disabled]="!recurrenceForm.valid" type="button" (click)="save()">Save</button>
       <button type="button" (click)="exportCron()" [disabled]="!recurrenceForm.valid">
     📤 Export as Cron Expression
   </button>
